@@ -1,0 +1,71 @@
+Great question! 🚀 Running Go in a **serverless environment on Vercel** is straightforward, but it requires following Vercel’s conventions for Go functions. Let me break it down:
+
+---
+
+## 📦 Project Structure
+Vercel expects your Go serverless functions to live inside the **`/api`** directory.
+
+Example:
+```
+my-vercel-app/
+ ├── api/
+ │    └── hello.go
+ ├── vercel.json   (optional config)
+ └── ...
+```
+
+---
+
+## 📝 Go Serverless Function
+Your code snippet is almost correct, but Vercel requires the function to be named **`Handler`** and to use the `net/http` signature:
+
+```go
+package handler
+
+import (
+    "fmt"
+    "net/http"
+)
+
+// This is the entry point for Vercel
+func Handler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "<h1>Hello from Go!</h1>")
+}
+```
+
+- **Package name** must be `handler`.
+- **Function name** must be `Handler`.
+- Vercel automatically compiles and deploys this as a serverless function.
+
+---
+
+## ⚙️ Deployment Steps
+1. **Install Vercel CLI**  
+   ```bash
+   npm i -g vercel
+   ```
+2. **Deploy your project**  
+   ```bash
+   vercel
+   ```
+3. Visit:  
+   ```
+   https://your-app.vercel.app/api/hello
+   ```
+   You’ll see:  
+   ```
+   <h1>Hello from Go!</h1>
+   ```
+
+---
+
+## 🔑 Key Notes
+- Each `.go` file inside `/api` becomes its own endpoint.  
+  - `api/hello.go` → `/api/hello`  
+  - `api/books.go` → `/api/books`  
+- You can use any Go libraries, but keep in mind **serverless functions are stateless**.  
+- For databases, connect to external services (Postgres, MySQL, MongoDB, etc.) using environment variables.  
+
+---
+
+👉 Do you want me to show you how to extend this into a **CRUD API in Vercel with Go** (e.g., `/api/books` with Create, Read, Update, Delete)? That way you’ll have a full serverless backend example.

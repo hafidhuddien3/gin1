@@ -1,0 +1,8 @@
+How to get recompile-on-save
+Use the live-reload Gin utility:
+
+Install: go install github.com/codegangsta/gin@latest
+Run: gin (or gin run), which will watch your Go files, rebuild, and restart on changes.
+
+Alternative watchers (if you prefer):
+Tools like CompileDaemon, air, reflex, fresh, or modd provide similar watch-and-restart workflows; they exist to solve the same “auto-recompile and reload on file change” need.
