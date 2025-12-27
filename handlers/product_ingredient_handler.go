@@ -39,6 +39,20 @@ func GetProductIngredient(c *gin.Context) {
     c.JSON(http.StatusOK, productIngredient)
 }
 
+// @Summary Get a productIngredient by productID
+// @Router /productIngredients/product/{productId} [get]
+func GetProductIngredientByProductId(c *gin.Context) {
+    productId := c.Param("productId")
+    var productIngredients models.ProductIngredient
+    // var productIngredients []ProductIngredient
+    if err := db.DB.Where("product_id = ?", productId).Find(&productIngredients).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "No ingredients found for this product"})
+        return
+    }
+
+    c.JSON(http.StatusOK, productIngredients)
+}
+
 // @Summary Update a productIngredient
 // @Router /productIngredients/{id} [put]
 func UpdateProductIngredient(c *gin.Context) {
