@@ -1,0 +1,69 @@
+package handlers
+
+import (
+    "net/http"
+    "gin-quickstart/db"
+    "gin-quickstart/models"
+    "github.com/gin-gonic/gin"
+)
+
+// @Summary Create a new productIngredient
+// @Router /productIngredients [post]
+func CreateProductIngredient(c *gin.Context) {
+    var productIngredient models.ProductIngredient
+    if err := c.ShouldBindJSON(&productIngredient); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+    db.DB.Create(&productIngredient)
+    c.JSON(http.StatusOK, productIngredient)
+}
+
+// @Summary Get all productIngredients
+// @Router /productIngredients [get]
+func GetProductIngredients(c *gin.Context) {
+    var productIngredients []models.ProductIngredient
+    db.DB.Find(&productIngredients)
+    c.JSON(http.StatusOK, productIngredients)
+}
+
+// @Summary Get a productIngredient by ID
+// @Router /productIngredients/{id} [get]
+func GetProductIngredient(c *gin.Context) {
+    id := c.Param("id")
+    var productIngredient models.ProductIngredient
+    if err := db.DB.First(&productIngredient, id).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "ProductIngredient not found"})
+        return
+    }
+    c.JSON(http.StatusOK, productIngredient)
+}
+
+// @Summary Update a productIngredient
+// @Router /productIngredients/{id} [put]
+func UpdateProductIngredient(c *gin.Context) {
+    id := c.Param("id")
+    var productIngredient models.ProductIngredient
+    if err := db.DB.First(&productIngredient, id).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "ProductIngredient not found"})
+        return
+    }
+    if err := c.ShouldBindJSON(&productIngredient); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+    db.DB.Save(&productIngredient)
+    c.JSON(http.StatusOK, productIngredient)
+}
+
+// @Summary Delete a productIngredient
+// @Router /productIngredients/{id} [delete]
+func DeleteProductIngredient(c *gin.Context) {
+    id := c.Param("id")
+    var productIngredient models.ProductIngredient
+    if err := db.DB.Delete(&productIngredient, id).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "ProductIngredient not found"})
+        return
+    }
+    c.JSON(http.StatusOK, gin.H{"message": "ProductIngredient deleted"})
+}
