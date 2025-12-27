@@ -1,0 +1,147 @@
+package main
+import _ "gin-quickstart/docs"
+
+import (
+    "log"
+    "net/http"
+
+    "github.com/gin-gonic/gin"
+    "gorm.io/driver/postgres"
+    "gorm.io/gorm"
+
+    "github.com/swaggo/gin-swagger" 
+    "github.com/swaggo/files"
+)
+
+var db *gorm.DB
+
+// Book model
+type Book struct {
+    ID     uint   `json:"id" gorm:"primaryKey"`
+    Title  string `json:"title"`
+    Author string `json:"author"`
+}
+
+func initDB() {
+    dsn := "postgresql://neondb_owner:npg_XP28nmjWhEpg@ep-hidden-feather-a1zkp1zz-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+
+    var err error
+    db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+    if err != nil {
+        log.Fatal("Failed to connect to Neon database:", err)
+    }
+
+    // Auto migrate schema
+    db.AutoMigrate(&Book{})
+}
+
+// @Summary      Create a new book
+// @Description  Add a new book to the database
+// @Tags         books
+// @Accept       json
+// @Produce      json
+// @Param        book  body      Book  true  "Book object"
+// @Success      200   {object}  Book
+// @Failure      400   {object}  map[string]string
+// @Router       /books [post]
+func createBook(c *gin.Context) {
+    var book Book
+    if err := c.ShouldBindJSON(&book); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+    db.Create(&book)
+    c.JSON(http.StatusOK, book)
+}
+
+// @Summary      Get all books
+// @Description  Retrieve all books from the database
+// @Tags         books
+// @Produce      json
+// @Success      200  {array}   Book
+// @Router       /books [get]
+func getBooks(c *gin.Context) {
+    var books []Book
+    db.Find(&books)
+    c.JSON(http.StatusOK, books)
+}
+
+// @Summary      Get a book by ID
+// @Description  Retrieve a single book by its ID
+// @Tags         books
+// @Produce      json
+// @Param        id   path      int  true  "Book ID"
+// @Success      200  {object}  Book
+// @Failure      404  {object}  map[string]string
+// @Router       /books/{id} [get]
+func getBook(c *gin.Context) {
+    id := c.Param("id")
+    var book Book
+    if err := db.First(&book, id).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Book not found"})
+        return
+    }
+    c.JSON(http.StatusOK, book)
+}
+
+// @Summary      Update a book
+// @Description  Update an existing book by ID
+// @Tags         books
+// @Accept       json
+// @Produce      json
+// @Param        id    path      int   true  "Book ID"
+// @Param        book  body      Book  true  "Updated book object"
+// @Success      200   {object}  Book
+// @Failure      400   {object}  map[string]string
+// @Failure      404   {object}  map[string]string
+// @Router       /books/{id} [put]
+func updateBook(c *gin.Context) {
+    id := c.Param("id")
+    var book Book
+    if err := db.First(&book, id).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Book not found"})
+        return
+    }
+    if err := c.ShouldBindJSON(&book); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+    db.Save(&book)
+    c.JSON(http.StatusOK, book)
+}
+
+// @Summary      Delete a book
+// @Description  Delete a book by ID
+// @Tags         books
+// @Produce      json
+// @Param        id   path      int  true  "Book ID"
+// @Success      200  {object}  map[string]string
+// @Failure      404  {object}  map[string]string
+// @Router       /books/{id} [delete]
+func deleteBook(c *gin.Context) {
+    id := c.Param("id")
+    var book Book
+    if err := db.Delete(&book, id).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Book not found"})
+        return
+    }
+    c.JSON(http.StatusOK, gin.H{"message": "Book deleted"})
+}
+
+func main() {
+    initDB()
+
+    r := gin.Default()
+
+    // Routes
+    r.POST("/books", createBook)
+    r.GET("/books", getBooks)
+    r.GET("/books/:id", getBook)
+    r.PUT("/books/:id", updateBook)
+    r.DELETE("/books/:id", deleteBook)
+
+    // Swagger endpoint (after running swag init)
+    r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+    r.Run(":8080")
+}

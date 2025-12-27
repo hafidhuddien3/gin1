@@ -1,0 +1,41 @@
+package main
+
+import (
+  "database/sql"
+
+  "github.com/gin-gonic/gin"
+  _ "github.com/lib/pq"
+)
+
+func main() {
+  db, err := sql.Open("postgres", "postgres://user:pass@localhost/dbname")
+  if err != nil {
+    panic(err)
+  }
+  defer db.Close()
+
+  r := gin.Default()
+
+  // Method 1: Pass db to handlers
+  r.GET("/users", func(c *gin.Context) {
+    var users []string
+    rows, _ := db.Query("SELECT name FROM users")
+    defer rows.Close()
+
+    for rows.Next() {
+      var name string
+      rows.Scan(&name)
+      users = append(users, name)
+    }
+
+    c.JSON(200, users)
+  })
+
+  // Method 2: Use middleware to inject db
+  r.Use(func(c *gin.Context) {
+    c.Set("db", db)
+    c.Next()
+  })
+
+  r.Run()
+}
