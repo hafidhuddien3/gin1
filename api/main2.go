@@ -11,7 +11,8 @@ import (
     "github.com/swaggo/files"
 )
 
-func main() {
+// func main() {
+func HandlerIndex(w http.ResponseWriter, r *http.Request) {
     db.InitDB()
 
     r := gin.Default()
@@ -65,8 +66,8 @@ func main() {
     r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
     // r.Run(":8080")
-    r.Run()
-    // r.ServeHTTP(w, r)
+    // r.Run()
+    r.ServeHTTP(w, r)
 }
 
 // func Handler(w http.ResponseWriter, r *http.Request) {
