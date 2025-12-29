@@ -20,14 +20,14 @@ import (
     "github.com/gin-gonic/gin"
 )
 
-func HandlerIndex(w http.ResponseWriter, r *http.Request) {
+func Handler(w http.ResponseWriter, r *http.Request) {
     g := gin.Default()
 
-    g.GET("/", func(c *gin.Context) {
+    g.GET("/api", func(c *gin.Context) {
         c.JSON(200, gin.H{"message": "Hello from Gin on Vercel!"})
     })
 
-    g.GET("/ping", func(c *gin.Context) {
+    g.GET("/api/ping", func(c *gin.Context) {
         c.JSON(200, gin.H{"message": "pong"})
     })
 
