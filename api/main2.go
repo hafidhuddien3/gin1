@@ -12,7 +12,7 @@ import (
 )
 
 // func main() {
-func HandlerIndex(w http.ResponseWriter, r *http.Request) {
+func HandlerMain(w http.ResponseWriter, r *http.Request) {
     db.InitDB()
 
     r := gin.Default()
