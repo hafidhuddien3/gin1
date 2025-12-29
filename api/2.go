@@ -5,7 +5,7 @@ import (
   "net/http"
 )
  
-func Handler(w http.ResponseWriter, r *http.Request) {
+func Handler2(w http.ResponseWriter, r *http.Request) {
   fmt.Fprintf(w, "<h1>Hello from 2!</h1>")
   // Set response header 
 //   w.Header().Set("Content-Type", "application/json") // Marshal the request struct into JSON 
