@@ -1,14 +1,14 @@
 package handler
  
 import (
-  "fmt"
+  // "fmt"
   "net/http"
 )
  
 func Handler(w http.ResponseWriter, r *http.Request) {
   // fmt.Fprintf(w, "<h1>Hello from Go!</h1>")
   // Set response header 
-  // w.Header().Set("Content-Type", "application/json") // Marshal the request struct into JSON 
-  // data, err := json.MarshalIndent(r, "", " ") if err != nil { http.Error(w, err.Error(), http.StatusInternalServerError) return } // Write JSON to response 
+  w.Header().Set("Content-Type", "application/json") // Marshal the request struct into JSON 
+  data, err := json.MarshalIndent(r, "", " ") if err != nil { http.Error(w, err.Error(), http.StatusInternalServerError) return } // Write JSON to response 
   w.Write(r)
 }
