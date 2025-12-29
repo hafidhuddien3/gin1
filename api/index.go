@@ -23,8 +23,12 @@ import (
 func Handler(w http.ResponseWriter, r *http.Request) {
     g := gin.Default()
 
-    g.GET("/api", func(c *gin.Context) {
-        c.JSON(200, gin.H{"message": "Hello from Gin on Vercel!"})
+    g.GET("/", func(c *gin.Context) {
+        c.JSON(200, gin.H{"message": "Hello from Gin on root!"})
+    })
+
+	g.GET("/api", func(c *gin.Context) {
+        c.JSON(200, gin.H{"message": "Hello from Gin on api!"})
     })
 
     g.GET("/ping", func(c *gin.Context) {
