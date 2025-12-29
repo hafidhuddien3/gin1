@@ -6,28 +6,85 @@
     "paths": {
         "/books": {
             "get": {
-                "description": "Retrieve all books from the database",
-                "produces": [
-                    "application/json"
-                ],
                 "tags": [
-                    "books"
+                    "Books"
                 ],
                 "summary": "Get all books",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/main.Book"
-                            }
-                        }
-                    }
-                }
+                "responses": {}
             },
             "post": {
-                "description": "Add a new book to the database",
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Create a new book",
+                "responses": {}
+            }
+        },
+        "/books/{id}": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get a book by ID",
+                "responses": {}
+            },
+            "put": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Update a book",
+                "responses": {}
+            },
+            "delete": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Delete a book",
+                "responses": {}
+            }
+        },
+        "/ingredients": {
+            "get": {
+                "tags": [
+                    "Ingredient"
+                ],
+                "summary": "Get all ingredients",
+                "responses": {}
+            },
+            "post": {
+                "tags": [
+                    "Ingredient"
+                ],
+                "summary": "Create a new ingredient",
+                "responses": {}
+            }
+        },
+        "/ingredients/{id}": {
+            "get": {
+                "tags": [
+                    "Ingredient"
+                ],
+                "summary": "Get a ingredient by ID",
+                "responses": {}
+            },
+            "put": {
+                "tags": [
+                    "Ingredient"
+                ],
+                "summary": "Update a ingredient",
+                "responses": {}
+            },
+            "delete": {
+                "tags": [
+                    "Ingredient"
+                ],
+                "summary": "Delete a ingredient",
+                "responses": {}
+            }
+        },
+        "/pattern": {
+            "post": {
+                "description": "Detect the type of sequence and return the next number",
                 "consumes": [
                     "application/json"
                 ],
@@ -35,17 +92,17 @@
                     "application/json"
                 ],
                 "tags": [
-                    "books"
+                    "Pattern"
                 ],
-                "summary": "Create a new book",
+                "summary": "Post pattern",
                 "parameters": [
                     {
-                        "description": "Book object",
-                        "name": "book",
+                        "description": "Sequence input",
+                        "name": "input",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.Book"
+                            "$ref": "#/definitions/handlers.InputPattern"
                         }
                     }
                 ],
@@ -53,7 +110,8 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.Book"
+                            "type": "object",
+                            "additionalProperties": true
                         }
                     },
                     "400": {
@@ -68,153 +126,103 @@
                 }
             }
         },
-        "/books/{id}": {
+        "/productIngredients": {
             "get": {
-                "description": "Retrieve a single book by its ID",
-                "produces": [
-                    "application/json"
-                ],
                 "tags": [
-                    "books"
+                    "Product Ingredient"
                 ],
-                "summary": "Get a book by ID",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Book ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
+                "summary": "Get all productIngredients",
+                "responses": {}
+            },
+            "post": {
+                "tags": [
+                    "Product Ingredient"
                 ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.Book"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
+                "summary": "Create a new productIngredient",
+                "responses": {}
+            }
+        },
+        "/productIngredients/product/{productId}": {
+            "get": {
+                "tags": [
+                    "Product Ingredient"
+                ],
+                "summary": "Get a productIngredient by productID",
+                "responses": {}
+            }
+        },
+        "/productIngredients/{id}": {
+            "get": {
+                "tags": [
+                    "Product Ingredient"
+                ],
+                "summary": "Get a productIngredient by ID",
+                "responses": {}
             },
             "put": {
-                "description": "Update an existing book by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
                 "tags": [
-                    "books"
+                    "Product Ingredient"
                 ],
-                "summary": "Update a book",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Book ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Updated book object",
-                        "name": "book",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/main.Book"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/main.Book"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
+                "summary": "Update a productIngredient",
+                "responses": {}
             },
             "delete": {
-                "description": "Delete a book by ID",
-                "produces": [
-                    "application/json"
-                ],
                 "tags": [
-                    "books"
+                    "Product Ingredient"
                 ],
-                "summary": "Delete a book",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Book ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
+                "summary": "Delete a productIngredient",
+                "responses": {}
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "Product"
                 ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
+                "summary": "Get all products",
+                "responses": {}
+            },
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Create a new product",
+                "responses": {}
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get a product by ID",
+                "responses": {}
+            },
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Update a product",
+                "responses": {}
+            },
+            "delete": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete a product",
+                "responses": {}
             }
         }
     },
     "definitions": {
-        "main.Book": {
+        "handlers.InputPattern": {
             "type": "object",
             "properties": {
-                "author": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "title": {
-                    "type": "string"
+                "seq": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
                 }
             }
         }

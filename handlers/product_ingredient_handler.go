@@ -7,6 +7,7 @@ import (
     "github.com/gin-gonic/gin"
 )
 
+// @Tags Product Ingredient
 // @Summary Create a new productIngredient
 // @Router /productIngredients [post]
 func CreateProductIngredient(c *gin.Context) {
@@ -19,6 +20,7 @@ func CreateProductIngredient(c *gin.Context) {
     c.JSON(http.StatusOK, productIngredient)
 }
 
+// @Tags Product Ingredient
 // @Summary Get all productIngredients
 // @Router /productIngredients [get]
 func GetProductIngredients(c *gin.Context) {
@@ -27,6 +29,7 @@ func GetProductIngredients(c *gin.Context) {
     c.JSON(http.StatusOK, productIngredients)
 }
 
+// @Tags Product Ingredient
 // @Summary Get a productIngredient by ID
 // @Router /productIngredients/{id} [get]
 func GetProductIngredient(c *gin.Context) {
@@ -39,6 +42,7 @@ func GetProductIngredient(c *gin.Context) {
     c.JSON(http.StatusOK, productIngredient)
 }
 
+// @Tags Product Ingredient
 // @Summary Get a productIngredient by productID
 // @Router /productIngredients/product/{productId} [get]
 func GetProductIngredientByProductId(c *gin.Context) {
@@ -53,6 +57,7 @@ func GetProductIngredientByProductId(c *gin.Context) {
     c.JSON(http.StatusOK, productIngredients)
 }
 
+// @Tags Product Ingredient
 // @Summary Update a productIngredient
 // @Router /productIngredients/{id} [put]
 func UpdateProductIngredient(c *gin.Context) {
@@ -70,6 +75,7 @@ func UpdateProductIngredient(c *gin.Context) {
     c.JSON(http.StatusOK, productIngredient)
 }
 
+// @Tags Product Ingredient
 // @Summary Delete a productIngredient
 // @Router /productIngredients/{id} [delete]
 func DeleteProductIngredient(c *gin.Context) {

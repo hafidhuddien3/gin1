@@ -7,6 +7,7 @@ import (
     "github.com/gin-gonic/gin"
 )
 
+// @Tags Product
 // @Summary Create a new product
 // @Router /products [post]
 func CreateProduct(c *gin.Context) {
@@ -19,6 +20,7 @@ func CreateProduct(c *gin.Context) {
     c.JSON(http.StatusOK, product)
 }
 
+// @Tags Product
 // @Summary Get all products
 // @Router /products [get]
 func GetProducts(c *gin.Context) {
@@ -27,6 +29,7 @@ func GetProducts(c *gin.Context) {
     c.JSON(http.StatusOK, products)
 }
 
+// @Tags Product
 // @Summary Get a product by ID
 // @Router /products/{id} [get]
 func GetProduct(c *gin.Context) {
@@ -39,6 +42,7 @@ func GetProduct(c *gin.Context) {
     c.JSON(http.StatusOK, product)
 }
 
+// @Tags Product
 // @Summary Update a product
 // @Router /products/{id} [put]
 func UpdateProduct(c *gin.Context) {
@@ -56,6 +60,7 @@ func UpdateProduct(c *gin.Context) {
     c.JSON(http.StatusOK, product)
 }
 
+// @Tags Product
 // @Summary Delete a product
 // @Router /products/{id} [delete]
 func DeleteProduct(c *gin.Context) {

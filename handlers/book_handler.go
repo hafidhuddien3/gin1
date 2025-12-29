@@ -7,6 +7,7 @@ import (
     "github.com/gin-gonic/gin"
 )
 
+// @Tags Books
 // @Summary Create a new book
 // @Router /books [post]
 func CreateBook(c *gin.Context) {
@@ -19,6 +20,7 @@ func CreateBook(c *gin.Context) {
     c.JSON(http.StatusOK, book)
 }
 
+// @Tags Books
 // @Summary Get all books
 // @Router /books [get]
 func GetBooks(c *gin.Context) {
@@ -27,6 +29,7 @@ func GetBooks(c *gin.Context) {
     c.JSON(http.StatusOK, books)
 }
 
+// @Tags Books
 // @Summary Get a book by ID
 // @Router /books/{id} [get]
 func GetBook(c *gin.Context) {
@@ -39,6 +42,7 @@ func GetBook(c *gin.Context) {
     c.JSON(http.StatusOK, book)
 }
 
+// @Tags Books
 // @Summary Update a book
 // @Router /books/{id} [put]
 func UpdateBook(c *gin.Context) {
@@ -56,6 +60,7 @@ func UpdateBook(c *gin.Context) {
     c.JSON(http.StatusOK, book)
 }
 
+// @Tags Books
 // @Summary Delete a book
 // @Router /books/{id} [delete]
 func DeleteBook(c *gin.Context) {

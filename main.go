@@ -57,6 +57,9 @@ func main() {
     r.PUT("/productIngredients/:id", handlers.UpdateProductIngredient)
     r.DELETE("/productIngredients/:id", handlers.DeleteProductIngredient)
 
+    // Routes
+    r.POST("/pattern", handlers.SearchPattern)
+
     // Swagger
     r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 

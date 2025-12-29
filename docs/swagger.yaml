@@ -1,145 +1,155 @@
 definitions:
-  main.Book:
+  handlers.InputPattern:
     properties:
-      author:
-        type: string
-      id:
-        type: integer
-      title:
-        type: string
+      seq:
+        items:
+          type: integer
+        type: array
     type: object
 info:
   contact: {}
 paths:
   /books:
     get:
-      description: Retrieve all books from the database
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/main.Book'
-            type: array
+      responses: {}
       summary: Get all books
       tags:
-      - books
+      - Books
+    post:
+      responses: {}
+      summary: Create a new book
+      tags:
+      - Books
+  /books/{id}:
+    delete:
+      responses: {}
+      summary: Delete a book
+      tags:
+      - Books
+    get:
+      responses: {}
+      summary: Get a book by ID
+      tags:
+      - Books
+    put:
+      responses: {}
+      summary: Update a book
+      tags:
+      - Books
+  /ingredients:
+    get:
+      responses: {}
+      summary: Get all ingredients
+      tags:
+      - Ingredient
+    post:
+      responses: {}
+      summary: Create a new ingredient
+      tags:
+      - Ingredient
+  /ingredients/{id}:
+    delete:
+      responses: {}
+      summary: Delete a ingredient
+      tags:
+      - Ingredient
+    get:
+      responses: {}
+      summary: Get a ingredient by ID
+      tags:
+      - Ingredient
+    put:
+      responses: {}
+      summary: Update a ingredient
+      tags:
+      - Ingredient
+  /pattern:
     post:
       consumes:
       - application/json
-      description: Add a new book to the database
+      description: Detect the type of sequence and return the next number
       parameters:
-      - description: Book object
+      - description: Sequence input
         in: body
-        name: book
+        name: input
         required: true
         schema:
-          $ref: '#/definitions/main.Book'
+          $ref: '#/definitions/handlers.InputPattern'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.Book'
+            additionalProperties: true
+            type: object
         "400":
           description: Bad Request
           schema:
             additionalProperties:
               type: string
             type: object
-      summary: Create a new book
+      summary: Post pattern
       tags:
-      - books
-  /books/{id}:
-    delete:
-      description: Delete a book by ID
-      parameters:
-      - description: Book ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      summary: Delete a book
-      tags:
-      - books
+      - Pattern
+  /productIngredients:
     get:
-      description: Retrieve a single book by its ID
-      parameters:
-      - description: Book ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/main.Book'
-        "404":
-          description: Not Found
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      summary: Get a book by ID
+      responses: {}
+      summary: Get all productIngredients
       tags:
-      - books
+      - Product Ingredient
+    post:
+      responses: {}
+      summary: Create a new productIngredient
+      tags:
+      - Product Ingredient
+  /productIngredients/{id}:
+    delete:
+      responses: {}
+      summary: Delete a productIngredient
+      tags:
+      - Product Ingredient
+    get:
+      responses: {}
+      summary: Get a productIngredient by ID
+      tags:
+      - Product Ingredient
     put:
-      consumes:
-      - application/json
-      description: Update an existing book by ID
-      parameters:
-      - description: Book ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: Updated book object
-        in: body
-        name: book
-        required: true
-        schema:
-          $ref: '#/definitions/main.Book'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/main.Book'
-        "400":
-          description: Bad Request
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      summary: Update a book
+      responses: {}
+      summary: Update a productIngredient
       tags:
-      - books
+      - Product Ingredient
+  /productIngredients/product/{productId}:
+    get:
+      responses: {}
+      summary: Get a productIngredient by productID
+      tags:
+      - Product Ingredient
+  /products:
+    get:
+      responses: {}
+      summary: Get all products
+      tags:
+      - Product
+    post:
+      responses: {}
+      summary: Create a new product
+      tags:
+      - Product
+  /products/{id}:
+    delete:
+      responses: {}
+      summary: Delete a product
+      tags:
+      - Product
+    get:
+      responses: {}
+      summary: Get a product by ID
+      tags:
+      - Product
+    put:
+      responses: {}
+      summary: Update a product
+      tags:
+      - Product
 swagger: "2.0"
