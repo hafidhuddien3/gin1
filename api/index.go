@@ -27,7 +27,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
         c.JSON(200, gin.H{"message": "Hello from Gin on Vercel!"})
     })
 
-    g.GET("/api/ping", func(c *gin.Context) {
+    g.GET("/ping", func(c *gin.Context) {
         c.JSON(200, gin.H{"message": "pong"})
     })
 
