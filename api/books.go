@@ -13,50 +13,53 @@ import (
 )
 
 func HandlerBooks(w http.ResponseWriter, r *http.Request) {
+
     db.InitDB()
 
     g := gin.Default()
 
-    g.GET("/", func(c *gin.Context) {
+    g.GET("/api/", func(c *gin.Context) {
     c.JSON(200, gin.H{
       "message": "ping",
     })
     })
 
-    g.GET("/ping", func(c *gin.Context) {
+    g.GET("/api/ping", func(c *gin.Context) {
     c.JSON(200, gin.H{
       "message": "ping",
     })
     })
 
     // Routes
-    g.POST("/books", handlers.CreateBook)
-    g.GET("/books", handlers.GetBooks)
-	// g.GET("/api/books", handlers.GetBooks)
-    g.GET("/books/:id", handlers.GetBook)
-    g.PUT("/books/:id", handlers.UpdateBook)
-    g.DELETE("/books/:id", handlers.DeleteBook)
+	if r.Method == "POST" {
+	g.POST("/api/books", handlers.CreateBook)
+	} else {
+	g.GET("/api/books", handlers.GetBooks)
+	}
+    g.GET("/api/books/:id", handlers.GetBook)
+    g.PUT("/api/books/:id", handlers.UpdateBook)
+    g.DELETE("/api/books/:id", handlers.DeleteBook)
 
-    g.POST("/ingredients", handlers.CreateIngredient)
-    g.GET("/ingredients", handlers.GetIngredients)
-    g.PUT("/ingredients/:id", handlers.UpdateIngredient)
-    g.DELETE("/ingredients/:id", handlers.DeleteIngredient)
+    g.POST("/api/ingredients", handlers.CreateIngredient)
+    g.GET("/api/ingredients", handlers.GetIngredients)
+    g.PUT("/api/ingredients/:id", handlers.UpdateIngredient)
+    g.DELETE("/api/ingredients/:id", handlers.DeleteIngredient)
 
-    g.POST("/products", handlers.CreateProduct)
-    g.GET("/products", handlers.GetProducts)
-    g.PUT("/products/:id", handlers.UpdateProduct)
-    g.DELETE("/products/:id", handlers.DeleteProduct)
+    g.POST("/api/products", handlers.CreateProduct)
+    g.GET("/api/products", handlers.GetProducts)
+    g.PUT("/api/products/:id", handlers.UpdateProduct)
+    g.DELETE("/api/products/:id", handlers.DeleteProduct)
 
-    g.POST("/productIngredients", handlers.CreateProductIngredient)
-    g.GET("/productIngredients/product/:productId", handlers.GetProductIngredientByProductId)
-    g.PUT("/productIngredients/:id", handlers.UpdateProductIngredient)
-    g.DELETE("/productIngredients/:id", handlers.DeleteProductIngredient)
+    g.POST("/api/productIngredients", handlers.CreateProductIngredient)
+    g.GET("/api/productIngredients/product/:productId", handlers.GetProductIngredientByProductId)
+    g.PUT("/api/productIngredients/:id", handlers.UpdateProductIngredient)
+    g.DELETE("/api/productIngredients/:id", handlers.DeleteProductIngredient)
 
     // Routes
-    g.POST("/pattern", handlers.SearchPattern)
+    g.POST("/api/pattern", handlers.SearchPattern)
 
     // Swagger
-    g.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+    g.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
     // r.Run(":8080")
     // r.Run()
