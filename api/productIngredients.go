@@ -12,7 +12,7 @@ import (
     "net/http"
 )
 
-func HandlerBooks(w http.ResponseWriter, r *http.Request) {
+func HandlerProductIngredients(w http.ResponseWriter, r *http.Request) {
 
     db.InitDB()
 
