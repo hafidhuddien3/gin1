@@ -1,0 +1,20 @@
+package handler
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func Handler(w http.ResponseWriter, r *http.Request) {
+    path := r.URL.Path // e.g. "/api/books/123"
+    parts := strings.Split(path, "/")
+
+    if len(parts) == 4 && parts[1] == "api" && parts[2] == "books" {
+        id := parts[3] // <-- capture ":id"
+        fmt.Fprintf(w, "<h1>Book ID: %s</h1>", id)
+        return
+    }
+
+    http.NotFound(w, r)
+}

@@ -1,0 +1,39 @@
+Gorilla Mux
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "github.com/gorilla/mux"
+)
+
+func main() {
+    r := mux.NewRouter()
+    r.HandleFunc("/api/books/{id}", func(w http.ResponseWriter, r *http.Request) {
+        vars := mux.Vars(r)
+        id := vars["id"]
+        fmt.Fprintf(w, "<h1>Book ID: %s</h1>", id)
+    })
+
+    http.ListenAndServe(":8080", r)
+}
+
+
+Chi
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "github.com/go-chi/chi/v5"
+)
+
+func main() {
+    r := chi.NewRouter()
+    r.Get("/api/books/{id}", func(w http.ResponseWriter, r *http.Request) {
+        id := chi.URLParam(r, "id")
+        fmt.Fprintf(w, "<h1>Book ID: %s</h1>", id)
+    })
+
+    http.ListenAndServe(":8080", r)
+}
