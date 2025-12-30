@@ -31,11 +31,11 @@ func HandlerBooks(w http.ResponseWriter, r *http.Request) {
     })
 
     // Routes
-	if r.Method == "POST" {
+	// if r.Method == "POST" {
 	g.POST("/api/books", handlers.CreateBook)
-	} else {
+	// } else {
 	g.GET("/api/books", handlers.GetBooks)
-	}
+	// }
     g.GET("/api/books/:id", handlers.GetBook)
     g.PUT("/api/books/:id", handlers.UpdateBook)
     g.DELETE("/api/books/:id", handlers.DeleteBook)
