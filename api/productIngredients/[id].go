@@ -12,7 +12,7 @@ import (
     "net/http"
 )
 
-func HandlerProductIngredientByProduct(w http.ResponseWriter, r *http.Request) {
+func HandlerProductIngredientByProductId(w http.ResponseWriter, r *http.Request) {
 
     db.InitDB()
 
@@ -51,7 +51,7 @@ func HandlerProductIngredientByProduct(w http.ResponseWriter, r *http.Request) {
     g.DELETE("/api/products/:id", handlers.DeleteProduct)
 
     g.POST("/api/productIngredients", handlers.CreateProductIngredient)
-    g.GET("/api/productIngredients/product/:productId", handlers.GetProductIngredientByProductId)
+    g.GET("/api/productIngredients/:productId", handlers.GetProductIngredientByProductId)
     g.PUT("/api/productIngredients/:id", handlers.UpdateProductIngredient)
     g.DELETE("/api/productIngredients/:id", handlers.DeleteProductIngredient)
 
