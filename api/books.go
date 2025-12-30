@@ -9,10 +9,9 @@ import (
     "github.com/gin-gonic/gin"
     "github.com/swaggo/gin-swagger"
     "github.com/swaggo/files"
-      "net/http"
+    "net/http"
 )
 
-// func main() {
 func HandlerBooks(w http.ResponseWriter, r *http.Request) {
     db.InitDB()
 
@@ -33,7 +32,7 @@ func HandlerBooks(w http.ResponseWriter, r *http.Request) {
     // Routes
     g.POST("/books", handlers.CreateBook)
     g.GET("/books", handlers.GetBooks)
-	g.GET("/api/books", handlers.GetBooks)
+	// g.GET("/api/books", handlers.GetBooks)
     g.GET("/books/:id", handlers.GetBook)
     g.PUT("/books/:id", handlers.UpdateBook)
     g.DELETE("/books/:id", handlers.DeleteBook)
@@ -63,19 +62,3 @@ func HandlerBooks(w http.ResponseWriter, r *http.Request) {
     // r.Run()
     g.ServeHTTP(w, r)
 }
-
-// func Handler(w http.ResponseWriter, r *http.Request) {
-//     var ginEngine *gin.Engine
-//     ginEngine = gin.Default()
-// 	  ginEngine.GET("/", func(c *gin.Context) {
-//         c.JSON(200, gin.H{"message": "Hello from Gin on Vercel!"})
-//     })
-//     // ginEngine.GET("/hello", func(c *gin.Context) {
-//     //     c.JSON(200, gin.H{"message": "Hello from Gin on Vercel!"})
-//     // })
-// 	  ginEngine.GET("/hello2", func(c *gin.Context) {
-//         c.JSON(200, gin.H{"message": "Hello2 from Gin on Vercel!"})
-//     })
-
-//     ginEngine.ServeHTTP(w, r)
-// }
