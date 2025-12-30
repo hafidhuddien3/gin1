@@ -27,6 +27,13 @@ func HandlerHello(w http.ResponseWriter, r *http.Request) {
         Body:   string(bodyBytes),
     }
 
+    // "method": "GET",
+    // "url": "/api/hello?name=user123",
+    // or get body: "body": "{\r\n    \"user\": \"user123\"\r\n}"
+
+    //  post
+    // "body": "{\r\n    \"user\": \"user123\"\r\n}"
+
     // Marshal into JSON
     data, err := json.MarshalIndent(dump, "", "  ")
     if err != nil {
