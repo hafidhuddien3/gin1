@@ -13,7 +13,7 @@ import (
 )
 
 // func main() {
-func HandlerMain(w http.ResponseWriter, r *http.Request) {
+func HandlerBooks(w http.ResponseWriter, r *http.Request) {
     db.InitDB()
 
     g := gin.Default()
