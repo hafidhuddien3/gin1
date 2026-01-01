@@ -16,8 +16,22 @@ func CreateProduct(c *gin.Context) {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
     }
+    if product.ID != 0 {
+    var productU models.Product
+    if err := db.DB.First(&productU, product.ID).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+        return
+    }
+    if err := c.ShouldBindJSON(&productU); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+    db.DB.Save(&productU)
+    c.JSON(http.StatusOK, productU)
+    } else {
     db.DB.Create(&product)
     c.JSON(http.StatusOK, product)
+    }
 }
 
 // @Tags Product
