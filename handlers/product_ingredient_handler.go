@@ -47,12 +47,15 @@ func GetProductIngredient(c *gin.Context) {
 // @Router /productIngredients/product/{productId} [get]
 func GetProductIngredientByProductId(c *gin.Context) {
     productId := c.Param("productId")
-    var productIngredients models.ProductIngredient
+    // var productIngredients models.ProductIngredient
+    var productIngredients []models.ProductIngredient
     // var productIngredients []ProductIngredient
     if err := db.DB.Where("product_id = ?", productId).Find(&productIngredients).Error; err != nil {
         c.JSON(http.StatusNotFound, gin.H{"error": "No ingredients found for this product"})
         return
     }
+
+    // if len(productIngredients) == 0 { c.JSON(http.StatusNotFound, gin.H{"error": "No ingredients found for this product"}) return }
 
     c.JSON(http.StatusOK, productIngredients)
 }
