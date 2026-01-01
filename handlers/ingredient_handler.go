@@ -14,7 +14,7 @@ func CreateIngredient(c *gin.Context) {
     var ingredient models.Ingredient
 
 if ingredient.ID != 0 { // client provided an ID 
-        if err := db.DB.First(&ingredient, id).Error; err != nil {
+        if err := db.DB.First(&ingredient, ingredient.ID).Error; err != nil {
         c.JSON(http.StatusNotFound, gin.H{"error": "Ingredient not found"})
         return
     }
