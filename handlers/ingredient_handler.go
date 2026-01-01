@@ -13,21 +13,18 @@ import (
 func CreateIngredient(c *gin.Context) {
     var ingredient models.Ingredient
 
+    if err := c.ShouldBindJSON(&ingredient); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
 if ingredient.ID != 0 { // client provided an ID 
         if err := db.DB.First(&ingredient, ingredient.ID).Error; err != nil {
         c.JSON(http.StatusNotFound, gin.H{"error": "Ingredient not found"})
         return
     }
-    if err := c.ShouldBindJSON(&ingredient); err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-        return
-    }
     db.DB.Save(&ingredient)
 } else {
-    if err := c.ShouldBindJSON(&ingredient); err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-        return
-    }
     db.DB.Create(&ingredient)
 }
 
