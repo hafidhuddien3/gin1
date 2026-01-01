@@ -19,4 +19,7 @@ func InitDB() {
         log.Fatal("Failed to connect to database:", err)
     }
     DB.AutoMigrate(&models.Book{})
+    DB.AutoMigrate(&models.Ingredient{})
+    DB.AutoMigrate(&models.ProductIngredient{})
+    DB.AutoMigrate(&models.Product{})
 }
