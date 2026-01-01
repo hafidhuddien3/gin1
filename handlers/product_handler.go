@@ -12,27 +12,32 @@ import (
 // @Router /products [post]
 func CreateProduct(c *gin.Context) {
     var product models.Product
+
+    // Bind JSON once
     if err := c.ShouldBindJSON(&product); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
     }
+
     if product.ID != 0 {
-    var productU models.Product
-    if err := db.DB.First(&productU, product.ID).Error; err != nil {
-        c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
-        return
-    }
-    if err := c.ShouldBindJSON(&productU); err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-        return
-    }
-    db.DB.Save(&productU)
-    c.JSON(http.StatusOK, productU)
+        // Update branch
+        var existing models.Product
+        if err := db.DB.First(&existing, product.ID).Error; err != nil {
+            c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+            return
+        }
+
+        // Update fields from JSON
+        db.DB.Model(&existing).Updates(product)
+
+        c.JSON(http.StatusOK, existing)
     } else {
-    db.DB.Create(&product)
-    c.JSON(http.StatusOK, product)
+        // Create branch
+        db.DB.Create(&product)
+        c.JSON(http.StatusOK, product)
     }
 }
+
 
 // @Tags Product
 // @Summary Get all products
