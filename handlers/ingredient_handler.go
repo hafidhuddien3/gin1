@@ -13,24 +13,36 @@ import (
 func CreateIngredient(c *gin.Context) {
     var ingredient models.Ingredient
 
+    // Bind JSON first
     if err := c.ShouldBindJSON(&ingredient); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
     }
 
-if ingredient.ID != 0 { // client provided an ID 
-        if err := db.DB.First(&ingredient, ingredient.ID).Error; err != nil {
-        c.JSON(http.StatusNotFound, gin.H{"error": "Ingredient not found"})
-        return
+    if ingredient.ID != 0 {
+        // Update existing
+        var existing models.Ingredient
+        if err := db.DB.First(&existing, ingredient.ID).Error; err != nil {
+            c.JSON(http.StatusNotFound, gin.H{"error": "Ingredient not found"})
+            return
+        }
+
+        // Overwrite fields
+        existing.Name = ingredient.Name
+        existing.Price = ingredient.Price
+        existing.Qty = ingredient.Qty
+        existing.QtyName = ingredient.QtyName
+        // ... copy other fields
+
+        db.DB.Save(&existing)
+        c.JSON(http.StatusOK, existing)
+    } else {
+        // Create new
+        db.DB.Create(&ingredient)
+        c.JSON(http.StatusOK, ingredient)
     }
-    db.DB.Save(&ingredient)
-} else {
-    db.DB.Create(&ingredient)
 }
 
-
-    c.JSON(http.StatusOK, ingredient)
-}
 
 // @Tags Ingredient
 // @Summary Get all ingredients
