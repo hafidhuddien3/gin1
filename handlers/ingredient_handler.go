@@ -12,11 +12,26 @@ import (
 // @Router /ingredients [post]
 func CreateIngredient(c *gin.Context) {
     var ingredient models.Ingredient
+
+if ingredient.ID != 0 { // client provided an ID 
+        if err := db.DB.First(&ingredient, id).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Ingredient not found"})
+        return
+    }
+    if err := c.ShouldBindJSON(&ingredient); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+    db.DB.Save(&ingredient)
+} else {
     if err := c.ShouldBindJSON(&ingredient); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
     }
     db.DB.Create(&ingredient)
+}
+
+
     c.JSON(http.StatusOK, ingredient)
 }
 
