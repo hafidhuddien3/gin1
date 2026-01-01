@@ -21,13 +21,16 @@ func HandlerIngredients(w http.ResponseWriter, r *http.Request) {
     g := gin.Default()
 
     // CORS config 
-    g.Use(cors.New(cors.Config{ 
-    AllowOrigins: []string{"*"}, // or restrict to your frontend domain 
-    AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}, 
-    AllowHeaders: []string{"Origin", "Content-Type", "Accept", "Authorization"}, 
-    ExposeHeaders: []string{"Content-Length"}, 
-    AllowCredentials: true, 
-    MaxAge: 12 * time.Hour, }))
+    // g.Use(cors.New(cors.Config{ 
+    // AllowOrigins: []string{"*"}, // or restrict to your frontend domain 
+    // AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}, 
+    // AllowHeaders: []string{"Origin", "Content-Type", "Accept", "Authorization"}, 
+    // ExposeHeaders: []string{"Content-Length"}, 
+    // AllowCredentials: true, 
+    // MaxAge: 12 * time.Hour, }))
+
+    // Use shared CORS middleware 
+    g.Use(middleware.CORSMiddleware())
 
     g.GET("/api/", func(c *gin.Context) {
     c.JSON(200, gin.H{
