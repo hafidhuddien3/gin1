@@ -33,11 +33,11 @@ func HandlerProductIngredients(w http.ResponseWriter, r *http.Request) {
     })
 
     // Routes
-	// if r.Method == "POST" {
-	// } else {
-	// }
-	g.POST("/api/books", handlers.CreateBook)
-	g.GET("/api/books", handlers.GetBooks)
+    // if r.Method == "POST" {
+    // } else {
+    // }
+    g.POST("/api/books", handlers.CreateBook)
+    g.GET("/api/books", handlers.GetBooks)
     g.GET("/api/books/:id", handlers.GetBook)
     g.PUT("/api/books/:id", handlers.UpdateBook)
     g.DELETE("/api/books/:id", handlers.DeleteBook)

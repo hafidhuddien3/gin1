@@ -11,7 +11,7 @@ import (
 // @Summary Create a new productIngredient
 // @Router /productIngredients [post]
 func CreateProductIngredient(c *gin.Context) {
-    var productIngredient models.ProductIngredient
+    var productIngredient []models.ProductIngredient
     if err := c.ShouldBindJSON(&productIngredient); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
