@@ -11,14 +11,47 @@ import (
 // @Summary Create a new productIngredient
 // @Router /productIngredients [post]
 func CreateProductIngredient(c *gin.Context) {
-    var productIngredient []models.ProductIngredient
-    if err := c.ShouldBindJSON(&productIngredient); err != nil {
+    var productIngredients []models.ProductIngredient
+
+    if err := c.ShouldBindJSON(&productIngredients); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
     }
-    db.DB.Create(&productIngredient)
-    c.JSON(http.StatusOK, productIngredient)
+
+    // if len(productIngredients) == 0 {
+    //     c.JSON(http.StatusBadRequest, gin.H{"error": "No product ingredients provided"})
+    //     return
+    // }
+
+    // Get productId from the first item (assuming all belong to same product)
+    productId := productIngredients[0].ProductID
+
+    // Delete existing rows for this productId
+    if err := db.DB.
+    Where("product_id = ?", productId).
+    Delete(&models.ProductIngredient{}).Error; err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        return
+    }
+
+    // Insert new rows
+    if err := db.DB.Create(&productIngredients).Error; err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, productIngredients)
 }
+
+// func CreateProductIngredient(c *gin.Context) {
+//     var productIngredient []models.ProductIngredient
+//     if err := c.ShouldBindJSON(&productIngredient); err != nil {
+//         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+//         return
+//     }
+//     db.DB.Create(&productIngredient)
+//     c.JSON(http.StatusOK, productIngredient)
+// }
 
 // @Tags Product Ingredient
 // @Summary Get all productIngredients
