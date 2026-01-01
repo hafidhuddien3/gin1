@@ -3,7 +3,7 @@ package handler
 
 import (
     _ "gin-quickstart/docs"
-    "gin-quickstart/db"
+    // "gin-quickstart/db"
     "gin-quickstart/handlers"
     "gin-quickstart/middleware"
 
@@ -13,7 +13,7 @@ import (
     "net/http"
 )
 
-func init() { db.InitDB() }, 
+// func init() { db.InitDB() }, 
 
 func HandlerBooks(w http.ResponseWriter, r *http.Request) {
 

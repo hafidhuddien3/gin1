@@ -3,7 +3,7 @@ package handler
 
 import (
     _ "gin-quickstart/docs"
-    "gin-quickstart/db"
+    // "gin-quickstart/db"
     "gin-quickstart/handlers"
     "gin-quickstart/middleware"
 
@@ -15,7 +15,7 @@ import (
 
 func HandlerIngredientId(w http.ResponseWriter, r *http.Request) {
 
-    db.InitDB()
+    // db.InitDB()
 
     g := gin.Default()
     g.Use(middleware.CORSMiddleware())

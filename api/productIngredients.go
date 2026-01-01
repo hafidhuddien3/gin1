@@ -3,7 +3,7 @@ package handler
 
 import (
     _ "gin-quickstart/docs"
-    "gin-quickstart/db"
+    // "gin-quickstart/db"
     "gin-quickstart/handlers"
     "gin-quickstart/middleware"
 
