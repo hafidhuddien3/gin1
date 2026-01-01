@@ -5,13 +5,14 @@ import (
     _ "gin-quickstart/docs"
     "gin-quickstart/db"
     "gin-quickstart/handlers"
+    "gin-quickstart/middleware"
 
-    "github.com/gin-contrib/cors"
+    // "github.com/gin-contrib/cors"
     "github.com/gin-gonic/gin"
     // "github.com/swaggo/gin-swagger"
     // "github.com/swaggo/files"
     "net/http"
-    "time"
+    // "time"
 )
 
 func HandlerIngredients(w http.ResponseWriter, r *http.Request) {
