@@ -53,6 +53,7 @@ func main() {
     r.DELETE("/products/:id", handlers.DeleteProduct)
 
     r.POST("/productIngredients", handlers.CreateProductIngredient)
+    r.GET("/productIngredients", handlers.GetProductIngredients)
     r.GET("/productIngredients/product/:productId", handlers.GetProductIngredientByProductId)
     r.PUT("/productIngredients/:id", handlers.UpdateProductIngredient)
     r.DELETE("/productIngredients/:id", handlers.DeleteProductIngredient)
