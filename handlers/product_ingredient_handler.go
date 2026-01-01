@@ -25,7 +25,9 @@ func CreateProductIngredient(c *gin.Context) {
 // @Router /productIngredients [get]
 func GetProductIngredients(c *gin.Context) {
     var productIngredients []models.ProductIngredient
-    db.DB.Find(&productIngredients)
+    db.DB.
+    Joins("Ingredient").
+    Find(&productIngredients)
     c.JSON(http.StatusOK, productIngredients)
 }
 
@@ -50,7 +52,10 @@ func GetProductIngredientByProductId(c *gin.Context) {
     // var productIngredients models.ProductIngredient
     var productIngredients []models.ProductIngredient
     // var productIngredients []ProductIngredient
-    if err := db.DB.Where("product_id = ?", productId).Find(&productIngredients).Error; err != nil {
+    if err := db.DB.
+    Joins("Ingredient").
+    Where("product_id = ?", productId).
+    Find(&productIngredients).Error; err != nil {
         c.JSON(http.StatusNotFound, gin.H{"error": "No ingredients found for this product"})
         return
     }
@@ -59,6 +64,20 @@ func GetProductIngredientByProductId(c *gin.Context) {
 
     c.JSON(http.StatusOK, productIngredients)
 }
+
+// type Result struct {
+//     ProductID    uint
+//     IngredientID uint
+//     IngredientName string
+// }
+
+// var results []Result
+// db.DB.Table("product_ingredients").
+//     Select("product_ingredients.product_id, product_ingredients.ingredient_id, ingredients.name as ingredient_name").
+//     Joins("inner join ingredients on product_ingredients.ingredient_id = ingredients.id").
+//     Where("product_ingredients.product_id = ?", productId).
+//     Scan(&results)
+
 
 // @Tags Product Ingredient
 // @Summary Update a productIngredient
