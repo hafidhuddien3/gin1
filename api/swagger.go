@@ -5,6 +5,7 @@ import (
     _ "gin-quickstart/docs"
     "gin-quickstart/db"
     "gin-quickstart/handlers"
+    "gin-quickstart/middleware"
 
     "github.com/gin-gonic/gin"
     "github.com/swaggo/gin-swagger"
@@ -17,6 +18,7 @@ func HandlerSwagger(w http.ResponseWriter, r *http.Request) {
     db.InitDB()
 
     g := gin.Default()
+    g.Use(middleware.CORSMiddleware())
 
     g.GET("/api/", func(c *gin.Context) {
     c.JSON(200, gin.H{
