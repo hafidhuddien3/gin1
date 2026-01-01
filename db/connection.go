@@ -4,7 +4,7 @@ import (
     "log"
     "gorm.io/driver/postgres"
     "gorm.io/gorm"
-    "gin-quickstart/models"
+    // "gin-quickstart/models"
 )
 
 var DB *gorm.DB
