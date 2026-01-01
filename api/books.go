@@ -13,9 +13,11 @@ import (
     "net/http"
 )
 
+func init() { db.InitDB() }, 
+
 func HandlerBooks(w http.ResponseWriter, r *http.Request) {
 
-    db.InitDB()
+    // db.InitDB()
 
     g := gin.Default()
     g.Use(middleware.CORSMiddleware())

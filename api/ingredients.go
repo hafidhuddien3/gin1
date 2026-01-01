@@ -17,7 +17,7 @@ import (
 
 func HandlerIngredients(w http.ResponseWriter, r *http.Request) {
 
-    db.InitDB()
+    // db.InitDB()
 
     g := gin.Default()
 

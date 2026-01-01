@@ -15,7 +15,7 @@ import (
 
 func HandlerSwagger(w http.ResponseWriter, r *http.Request) {
 
-    db.InitDB()
+    // db.InitDB()
 
     g := gin.Default()
     g.Use(middleware.CORSMiddleware())

@@ -14,12 +14,15 @@ func InitDB() {
     // dsn := "postgresql://neondb_owner:password@host/neondb?sslmode=require"
 	log.Println("Connecting to Neon database...")
     var err error
-    DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+    DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+        PrepareStmt: false,
+    })
     if err != nil {
         log.Fatal("Failed to connect to database:", err)
     }
-    DB.AutoMigrate(&models.Book{})
-    DB.AutoMigrate(&models.Ingredient{})
-    DB.AutoMigrate(&models.ProductIngredient{})
-    DB.AutoMigrate(&models.Product{})
+    //DB.AutoMigrate(...) is slow and unnecessary per request
+    // DB.AutoMigrate(&models.Book{})
+    // DB.AutoMigrate(&models.Ingredient{})
+    // DB.AutoMigrate(&models.ProductIngredient{})
+    // DB.AutoMigrate(&models.Product{})
 }
