@@ -3,7 +3,6 @@ package handler
 
 import (
     _ "gin-quickstart/docs"
-    // "gin-quickstart/db"
     "gin-quickstart/handlers"
     "gin-quickstart/middleware"
 
@@ -14,8 +13,6 @@ import (
 )
 
 func HandlerProducts(w http.ResponseWriter, r *http.Request) {
-
-    // db.InitDB()
 
     g := gin.Default()
     g.Use(middleware.CORSMiddleware())
@@ -32,10 +29,6 @@ func HandlerProducts(w http.ResponseWriter, r *http.Request) {
     })
     })
 
-    // Routes
-	// if r.Method == "POST" {
-	// } else {
-	// }
     g.POST("/api/books", handlers.CreateBook)
     g.GET("/api/books", handlers.GetBooks)
     g.GET("/api/books/:id", handlers.GetBook)
